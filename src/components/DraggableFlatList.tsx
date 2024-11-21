@@ -117,10 +117,6 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
   }
 
   useEffect(() => {
-    reset()
-  }, [JSON.stringify(props.data)]);
-  
-  useEffect(() => {
     if (!propsRef.current.enableLayoutAnimationExperimental) return;
     if (activeKey) {
       setLayoutAnimationDisabled(true);
@@ -225,6 +221,9 @@ function DraggableFlatListInner<T>(props: DraggableFlatListProps<T>) {
       }
 
       onDragEnd?.({ from, to, data: newData });
+
+      // Reset state after animations are complete
+      runOnJS(reset)();
     }
   );
 
